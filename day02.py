@@ -1,10 +1,10 @@
 from aoc import read_input
 
-
 winning_hands = [('A', 'Y'), ('B', 'Z'), ('C', 'X')]
 
 my_choices = 'XYZ'
 their_choices = 'ABC'
+
 
 def score1(theirs, mine):
     my_index = my_choices.index(mine)
@@ -17,28 +17,17 @@ def score1(theirs, mine):
 
 
 def score2(theirs, outcome):
-    if outcome == 'X':
-        their_index = their_choices.index(theirs)
-        my_choice = my_choices[their_index - 1]
-        score = my_choices.index(my_choice)
-    elif outcome == 'Y':
-        their_index = their_choices.index(theirs)
-        my_choice = my_choices[their_index]
-        score = 3 + my_choices.index(my_choice)
-    else:
-        their_index = their_choices.index(theirs)
-        my_choice = my_choices[(their_index + 1) % 3]
-        score = 6 + my_choices.index(my_choice)
-    return score + 1
-
-
-
+    their_index = their_choices.index(theirs)
+    offset = my_choices.index(outcome) - 1
+    my_choice = my_choices[(their_index + offset) % 3]
+    score = 3 + (offset * 3) + my_choices.index(my_choice) + 1
+    return score
 
 
 if __name__ == '__main__':
     total = 0
     for line in (lines := read_input().splitlines()):
-    # for line in (lines := ['A Y', 'B X', 'C Z']):
+        # for line in (lines := ['A Y', 'B X', 'C Z']):
         if line := line.strip():
             theirs, mine = line.split()
             round_score = score1(theirs, mine)
