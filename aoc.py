@@ -11,5 +11,4 @@ def read_input(test=False):
         input_path = p.with_name(name).with_suffix('.txt')
     else:
         input_path = p.with_suffix('.txt')
-    return [line for l in input_path.read_text().splitlines()
-            if (line := l.strip())]
+    return input_path.read_text().splitlines()
