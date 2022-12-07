@@ -134,3 +134,26 @@ if __name__ == '__main__':
     lines = read_input()
     p1 = part1(lines)
     print(f'Part 1: {p1}')
+
+
+def part2(lines):
+    root = process_input(lines)
+    unused = 70000000 - root.size
+    needed = 30000000
+    amount_to_be_freed = needed - unused
+
+    def iter_eligible_dirs():
+        for dir in walkdirs(root):
+            if (size := dir.size) > amount_to_be_freed:
+                yield size
+
+    return min(iter_eligible_dirs())
+
+
+def test_part2():
+    assert 24933642 == part2(lines)
+
+
+if __name__ == '__main__':
+    p2 = part2(lines)
+    print(f'Part 2: {p2}')
